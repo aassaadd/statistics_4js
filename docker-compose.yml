@@ -1,0 +1,47 @@
+version: '3.5'
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    privileged: true #拥有外部root 权限
+    user: root #使用root用户
+    environment:
+      - TZ=Asia/Shanghai
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=longyao2018
+    volumes:
+      - /docker/mongo:/data/db
+    ports:
+      - 27017:27017
+    deploy:
+      placement:
+        constraints: [node.hostname == activity001]
+      restart_policy:
+        condition: on-failure
+      replicas: 1
+    networks:
+      - case_network
+  nginx:
+    image: nginx:latest
+    restart: always
+    privileged: true #拥有外部root 权限
+    user: root #使用root用户
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /docker/nginx:/data/db
+    ports:
+      - 27017:27017
+    deploy:
+      placement:
+        constraints: [node.hostname == activity001]
+      restart_policy:
+        condition: on-failure
+      replicas: 1
+    networks:
+      - case_network
+networks:
+  case_network:
+  driver: overlay
+
+

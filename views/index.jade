@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  div(class="container")
+    h1= title
+    p Welcome to #{title}
+    div(class="form-group")
+      label key
+      input(type="text",id="key",class="form-control",value=key)
+      input(type="text",id="extra_city",class="form-control",value=extra.city)
+      button(id="submit",class="btn btn-default") 查询
+    table(class="table table-bordered")
+      thead
+        tr
+          td key
+          td tags
+          td times
+          td city
+          td extra
+      tbody(id="tab")
+    button(id="other",class="btn btn-default") 更多
